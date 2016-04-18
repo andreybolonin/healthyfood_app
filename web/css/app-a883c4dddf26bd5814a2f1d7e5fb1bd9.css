@@ -11051,40 +11051,43 @@ button {
     font-size: 14px;
     line-height: 18px
 }
-.footer__nav--contact__link--phone:before {
-    font-size: 18px;
-    line-height: 18px;
-    font-weight: 400;
-    font-style: normal;
-    font-family: "Icon 4r", "Icon A", "Icon B";
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    content: "\e90d";
-    font-variant: normal;
-    speak: none;
-    text-indent: 0;
-    text-transform: none;
-    vertical-align: top;
-    display: inline-block;
-    padding-right: 10px
+a:hover {
+    text-decoration: none;
 }
-.footer__nav--contact__link--email:before {
-    font-size: 18px;
-    line-height: 18px;
-    font-weight: 400;
-    font-style: normal;
-    font-family: "Icon 4r", "Icon A", "Icon B";
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    content: "\e906";
-    font-variant: normal;
-    speak: none;
-    text-indent: 0;
-    text-transform: none;
-    vertical-align: top;
-    display: inline-block;
-    padding-right: 10px
-}
+/*.footer__nav--contact__link--phone:before {*/
+    /*font-size: 18px;*/
+    /*line-height: 18px;*/
+    /*font-weight: 400;*/
+    /*font-style: normal;*/
+    /*font-family: "Icon 4r", "Icon A", "Icon B";*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*content: "\e90d";*/
+    /*font-variant: normal;*/
+    /*speak: none;*/
+    /*text-indent: 0;*/
+    /*text-transform: none;*/
+    /*vertical-align: top;*/
+    /*display: inline-block;*/
+    /*padding-right: 10px*/
+/*}*/
+/*.footer__nav--contact__link--email:before {*/
+    /*font-size: 18px;*/
+    /*line-height: 18px;*/
+    /*font-weight: 400;*/
+    /*font-style: normal;*/
+    /*font-family: "Icon 4r", "Icon A", "Icon B";*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*content: "\e906";*/
+    /*font-variant: normal;*/
+    /*speak: none;*/
+    /*text-indent: 0;*/
+    /*text-transform: none;*/
+    /*vertical-align: top;*/
+    /*display: inline-block;*/
+    /*padding-right: 10px*/
+/*}*/
 .footer__nav--social__item {
     height: 18px;
     margin-left: 12px
@@ -11499,7 +11502,7 @@ button {
     }
 }
 .header__logo {
-    background-image: url("/assets/css/images/backgrounds/plated-logo-large.svg");
+    background-image: url("/im/plated-logo-large.svg");
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     left: 50%;
@@ -16508,7 +16511,8 @@ button {
     }
 }
 .recipe__ingredients {
-    padding-bottom: 80px
+    padding-bottom: 80px;
+    margin-left: 150px;
 }
 .recipe__ingredients:before, .recipe__ingredients:after {
     content: "\0020";
