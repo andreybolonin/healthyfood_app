@@ -13,7 +13,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
         return $this->render('default/lp.html.twig', [
 //            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
@@ -24,7 +23,6 @@ class DefaultController extends Controller
      */
     public function tariffAction(Request $request)
     {
-        // replace this example code with whatever you need
         return $this->render('default/tariff.html.twig', [
 //            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
@@ -38,20 +36,32 @@ class DefaultController extends Controller
         $tariff = $request->get('tariff');
         $fmt = new \IntlDateFormatter( "ru_RU", \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, 'Europe/Kiev');
 
-
-
         $delivery = [
             date_format(new \DateTime('+2 days'), 'Y-m-d') => $fmt->format(new \DateTime('+2 days')),
             date_format(new \DateTime('+5 days'), 'Y-m-d') => $fmt->format(new \DateTime('+5 days')),
             date_format(new \DateTime('+7 days'), 'Y-m-d') => $fmt->format(new \DateTime('+7 days')),
         ];
 
-//        var_dump($delivery);exit;
+        $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
+        $json_string = [
+            'version' => 3,
+            'public_key' => 'i21026092163',
+            'action' => 'subscribe',
+            'amount' => '1800',
+            'currency' => 'UAH',
+            'description' => 'test description',
+            'order_id' => 'test order_id'
+        ];
 
-        // replace this example code with whatever you need
+        $data = base64_encode(json_encode($json_string));
+
+        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
+
         return $this->render('default/delivery.html.twig', [
             'tariff' => $tariff,
-            'delivery' => $delivery
+            'delivery' => $delivery,
+            'data' => $data,
+            'signature' => $signature
         ]);
     }
 
@@ -60,7 +70,9 @@ class DefaultController extends Controller
      */
     public function paymentAction(Request $request)
     {
-        // replace this example code with whatever you need
+        // save delivery data &
+        // redirect post to https://www.liqpay.com/api/3/checkout
+        
         return $this->render('default/payment.html.twig', [
 //            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
