@@ -949,17 +949,35 @@
                                                     class="select optional"
                                                     id="user_address_user_preferred_delivery_date"
                                                     name="user_address[user][preferred_delivery_date]">
-                                                <option value="">Выберите вашу дату доставки</option>
-                                                <option value="2016-04-15">Friday, April 15</option>
-                                                <option value="2016-04-19">Tuesday, April 19</option>
-                                                <option value="2016-04-20">Wednesday, April 20</option>
+                                                <option value="">Выберите Вашу дату доставки</option>
+                                                    {% for key, value in delivery %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
                                             </select></div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="delivery-day-selection">
+                                    <div class="delivery-info-section row">
+                                        <div class="col-xs-12 col-sm-12">
+                                            <h4>Детали Оплаты</h4>
+                                            <!--<i class="fa fa-lock pull-right">-->
+                                            <!--<span style="text-transform: none;" class="hidden-xs">&nbsp; Защищено</span>-->
+                                            <!--</i>-->
+                                            <hr class="main">
+                                            <p>Для продолжения оформления заказа Вы будете перемещены на страницу платежной системы LiqPay. После успешной оплаты мы вернем Вас на страницу заверешения оформления заказа.</p>
+                                            <!--<p>Почти готово! Скажите нам пожалуйста какую карту Вы хотите использовать чтобы начать получать еженедельную доставку.</p>-->
+                                            <form accept-charset="UTF-8" action="https://www.liqpay.com/api/3/checkout" class="simple_form new_completion" id="home-landing-page-payment-profile-form" method="post" novalidate="novalidate">
+                                                <input type="hidden" name="data" value="eyAidmVyc2lvbiIgOiAzLCAicHVibGljX2tleSIgOiAieW91cl9wdWJsaWNfa2V5IiwgImFjdGlvbiIgOiAicGF5IiwgImFtb3VudCIgOiAxLCAiY3VycmVuY3kiIDogIlVTRCIsICJkZXNjcmlwdGlvbiIgOiAiZGVzY3JpcHRpb24gdGV4dCIsICJvcmRlcl9pZCIgOiAib3JkZXJfaWRfMSIgfQ=="/>
+                                                <input type="hidden" name="signature" value="QvJD5u9Fg55PCx/Hdz6lzWtYwcI="/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <div class="col-xs-12"><input class="continue btn btn--tomato btn-block"
-                                                                  name="commit" type="submit" value="Продолжить"></div>
+                                    <div class="col-xs-12">
+                                        <input class="continue btn btn--tomato btn-block" name="commit" type="submit" value="Оформить Заказ">
+                                    </div>
                                     <div id="step-2-address-errors"></div>
                                 </div>
                                 <div class="row" style="display: none;">
@@ -975,32 +993,64 @@
                     </div>
                 </section>
             </div>
+
     <div class="hidden-xs">
         <section class="signup-flow order-summary col-xs-12 col-sm-4">
             <div class="graphic-image plated-delivery hidden-xs"></div>
             <h4>Ваш Заказ</h4>
             <hr>
-            <div class="order-details"><h4 class="alternate">Детали Заказа</h4>
+            <div class="order-details">
+                <h4 class="alternate">Детали Заказа</h4>
                 <table>
                     <tbody>
-                    <tr class="subtotal">
-                        <th>3 Обеда x 2 Человек</th>
-                        <td>1 800 грн</td>
-                    </tr>
-                    <tr>
-                        <th>Доставка</th>
-                        <td>БЕСПЛАТНАЯ!</td>
-                    </tr>
-                    <tr class="total">
-                        <th><strong>Итого</strong></th>
-                        <td><strong class="total-price">1 800 грн</strong></td>
-                    </tr>
+                    {% if tariff == '1' %}
+                        <tr class="subtotal">
+                            <th>1 Обед x 2 Человек</th>
+                            <td>999 грн</td>
+                        </tr>
+                        <tr>
+                            <th>Доставка</th>
+                            <td>100 грн</td>
+                        </tr>
+                        <tr class="total">
+                            <th><strong>Итого</strong></th>
+                            <td><strong class="total-price">1 099 грн</strong></td>
+                        </tr>
+                    {% elseif tariff == '3' %}
+                        <tr class="subtotal">
+                            <th>3 Обеда x 2 Человек</th>
+                            <td>1 800 грн</td>
+                        </tr>
+                        <tr>
+                            <th>Доставка</th>
+                            <td>БЕСПЛАТНАЯ!</td>
+                        </tr>
+                        <tr class="total">
+                            <th><strong>Итого</strong></th>
+                            <td><strong class="total-price">1 800 грн</strong></td>
+                        </tr>
+                    {% elseif tariff == '5' %}
+                        <tr class="subtotal">
+                            <th>4 Обеда x 2 Человек</th>
+                            <td>2 400 грн</td>
+                        </tr>
+                        <tr>
+                            <th>Доставка</th>
+                            <td>БЕСПЛАТНАЯ!</td>
+                        </tr>
+                        <tr class="total">
+                            <th><strong>Итого</strong></th>
+                            <td><strong class="total-price">2 400 грн</strong></td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
-    </div></div></main>
+    </div>
+    </div>
+</main>
 <footer class="new-flow-footer" style="display:none;">
     <ul class="new-flow-footer__legal-items">
         <li class="new-flow-footer__legal-item new-flow-footer__legal-item_monogram">

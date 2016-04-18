@@ -31,16 +31,30 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/delivery", name="delivery")
+     * @Route("/delivery/{tariff}", name="delivery")
      */
     public function deliveryAction(Request $request)
     {
+        $tariff = $request->get('tariff');
+        $fmt = new \IntlDateFormatter( "ru_RU", \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, 'Europe/Kiev');
+
+
+
+        $delivery = [
+            date_format(new \DateTime('+2 days'), 'Y-m-d') => $fmt->format(new \DateTime('+2 days')),
+            date_format(new \DateTime('+5 days'), 'Y-m-d') => $fmt->format(new \DateTime('+5 days')),
+            date_format(new \DateTime('+7 days'), 'Y-m-d') => $fmt->format(new \DateTime('+7 days')),
+        ];
+
+//        var_dump($delivery);exit;
+
         // replace this example code with whatever you need
         return $this->render('default/delivery.html.twig', [
-//            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+            'tariff' => $tariff,
+            'delivery' => $delivery
         ]);
     }
-    
+
     /**
      * @Route("/payment", name="payment")
      */
