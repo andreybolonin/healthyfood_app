@@ -127,6 +127,9 @@ class DefaultController extends Controller
      */
     public function callbackAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->info($request);
+
         $em = $this->getDoctrine()->getManager();
         $lead = $this->getDoctrine()->getRepository('AppBundle:Lead')->find($request->get('order_id'));
 
