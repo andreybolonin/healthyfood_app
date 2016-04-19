@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Lead;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Goutte\Client;
@@ -48,16 +49,18 @@ class DefaultController extends Controller
 
         return $this->render('default/delivery.html.twig', [
             'tariff' => $tariff,
-            'delivery' => $delivery,
+            'delivery' => $delivery
         ]);
     }
 
     /**
+     * Create order and prepare payment data
+     * 
      * @Route("/payment/{tariff}", name="payment")
      */
     public function paymentAction(Request $request)
     {
-        // save delivery data &
+        // save delivery data
         $em = $this->getDoctrine()->getManager();
         $lead = new Lead();
 
@@ -68,51 +71,61 @@ class DefaultController extends Controller
         $lead->setEmail($request->get('email'));
         $lead->setPhone($request->get('phone'));
         $lead->setTariff($request->get('tariff'));
-        $lead->setDeliveryDate($request->get('delivery_date'));
+        $lead->setAmount($lead->calculateAmount());
+        $lead->setCurrency('UAH');
+        $lead->setDeliveryDate($request->get('delivery'));
 
         $em->persist($lead);
         $em->flush();
 
+        // generate payment data
         $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
         $json_string = [
             'version' => 3,
             'public_key' => 'i21026092163',
-            'action' => 'subscribe',
-            'amount' => '1800',
+            'action' => 'pay',
+            'amount' => $lead->getAmount(),
             'currency' => 'UAH',
-            'description' => 'test description',
-            'order_id' => 'test order_id'
+            'description' => 'Оплата услуг HealthyFood',
+            'order_id' => $lead->getId(),
+            'server_url' => '',
+            'result_url' => 'http://healthmarketing.me/thx/',
+            'sandbox' => 1
         ];
 
         $data = base64_encode(json_encode($json_string));
         $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
 
-//        $subRequest = Request::create('https://www.liqpay.com/api/3/checkout', 'POST', ['data' => $data, 'signature' => $signature]);
-//        return new RedirectResponse($subRequest);
-//        return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
+        $lead->setData($data);
+        $lead->setSignature($signature);
 
-//        $client = new Client();
-//        $crawler = $client->request('POST', 'https://www.liqpay.com/api/3/checkout', [
-//            'data' => $data,
-//            'signature' => $signature
-//        ]);
+        $em->persist($lead);
+        $em->flush();
 
-//        $this->sendHttpRequest();
+        $fmt = new \IntlDateFormatter( "ru_RU", \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, 'Europe/Kiev');
+        $delivery = $fmt->format(new \DateTime($request->get('delivery')));
 
-//       $this->redirect_post('https://www.liqpay.com/api/3/checkout', ['data' => $data, 'signature' => $signature]);
-
-//        return $this->redirect();
-
-//        return $this->redirectToRoute('https://www.liqpay.com/api/3/checkout', ['data' => $data,
-//            'signature' => $signature], 301);
-        
-//        return new RedirectResponse('https://www.liqpay.com/api/3/checkout', 302, )
-
-        // redirect post to https://www.liqpay.com/api/3/checkout
-        
         return $this->render('default/payment.html.twig', [
             'data' => $data,
-            'signature' => $signature
+            'signature' => $signature,
+            'tariff' => $request->get('tariff'),
+            'delivery' => $delivery
+        ]);
+    }
+
+    /**
+     * @Route("/callback", name="callback")
+     */
+    public function callbackAction(Request $request)
+    {
+        $data = $request->get('data');
+        $signature = $request->get('signature');
+
+        $status = $request->get('status');
+        $type = $request->get('type');
+
+        return $this->render('default/tariff.html.twig', [
+//            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
     }
 

@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Lead extends Base
 {
+    const TARIFF_ONE = 1;
+
+    const TARIFF_THREE = 3;
+
+    const TARIFF_FOUR = 4;
+    
+    const TARIFF_FIVE = 5;
+
     /**
      * @var string
      *
@@ -49,6 +57,122 @@ class Lead extends Base
      * @ORM\Column(type="string", length=255)
      */
     protected $deliveryDate;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $amount;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $currency;
+
+    /**
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    protected $data;
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @param mixed $signature
+     */
+    public function setSignature($signature)
+    {
+        $this->signature = $signature;
+    }
+
+    /**
+     * @ORM\Column(type="text", length=255, nullable=true)
+     */
+    protected $signature;
+
+    /**
+     * @return mixed
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param mixed $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param mixed $amount
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * Returns array of statuses.
+     *
+     * @return []
+     */
+    public static function valuesOfAmount()
+    {
+        return [
+            self::TARIFF_ONE => 1099,
+            self::TARIFF_THREE => 1800,
+            self::TARIFF_FOUR => 2400,
+            self::TARIFF_FIVE => 3000,
+        ];
+    }
+
+    /**
+     * Returns status name.
+     *
+     * @return string
+     */
+    public function calculateAmount()
+    {
+        if (array_key_exists($this->getTariff(), self::valuesOfAmount())) {
+            $statusArray = self::valuesOfAmount();
+
+            return $statusArray[$this->getTariff()];
+        }
+
+        return false;
+    }
 
     /**
      * @return mixed

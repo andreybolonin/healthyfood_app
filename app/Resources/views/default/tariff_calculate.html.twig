@@ -1,0 +1,40 @@
+{% if tariff == '1' %}
+    <tr class="subtotal">
+        <th>1 Обед x 2 Человек</th>
+        <td>999 грн</td>
+    </tr>
+    <tr>
+        <th>Доставка</th>
+        <td>100 грн</td>
+    </tr>
+    <tr class="total">
+        <th><strong>Итого</strong></th>
+        <td><strong class="total-price">1 099 грн</strong></td>
+    </tr>
+{% elseif tariff == '3' %}
+    <tr class="subtotal">
+        <th>3 Обеда x 2 Человек</th>
+        <td>1 800 грн</td>
+    </tr>
+    <tr>
+        <th>Доставка</th>
+        <td>БЕСПЛАТНАЯ!</td>
+    </tr>
+    <tr class="total">
+        <th><strong>Итого</strong></th>
+        <td><strong class="total-price">1 800 грн</strong></td>
+    </tr>
+{% elseif tariff == '5' %}
+    <tr class="subtotal">
+        <th>5 Обедов x 2 Человек</th>
+        <td>3 000 грн</td>
+    </tr>
+    <tr>
+        <th>Доставка</th>
+        <td>БЕСПЛАТНАЯ!</td>
+    </tr>
+    <tr class="total">
+        <th><strong>Итого</strong></th>
+        <td><strong class="total-price">3 000 грн</strong></td>
+    </tr>
+{% endif %}
