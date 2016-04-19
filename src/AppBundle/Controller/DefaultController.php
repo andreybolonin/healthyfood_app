@@ -24,7 +24,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/tariff", name="tariff")
+     * @Route("/tariff/", name="tariff")
      */
     public function tariffAction(Request $request)
     {
