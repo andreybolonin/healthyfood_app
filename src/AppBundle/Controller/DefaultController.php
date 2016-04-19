@@ -93,7 +93,7 @@ class DefaultController extends Controller
             'language' => 'ru',
             'server_url' => 'http://thehealthyfood.ru/callback',
             'result_url' => 'http://thehealthyfood.ru/thx',
-            'sandbox' => 1
+//            'sandbox' => 1
         ];
 
         $data = base64_encode(json_encode($json_string));
