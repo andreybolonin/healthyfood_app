@@ -89,7 +89,7 @@ class DefaultController extends Controller
             'description' => 'Оплата услуг HealthyFood',
             'order_id' => $lead->getId(),
             'server_url' => '',
-            'result_url' => 'http://healthmarketing.me/thx/',
+            'result_url' => 'http://thehealthyfood.ru/thx',
             'sandbox' => 1
         ];
 
@@ -114,6 +114,14 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/thx", name="thx")
+     */
+    public function thxAction(Request $request)
+    {
+        return $this->render('default/thx.html.twig', []);
+    }
+
+    /**
      * @Route("/callback", name="callback")
      */
     public function callbackAction(Request $request)
@@ -128,7 +136,6 @@ class DefaultController extends Controller
 //            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ]);
     }
-
 
     /**
      * Redirect with POST data.
