@@ -89,7 +89,7 @@ class DefaultController extends Controller
             'currency' => 'UAH',
             'description' => 'Оплата услуг HealthyFood',
             'order_id' => $lead->getId(),
-            'server_url' => '',
+            'server_url' => 'http://thehealthyfood.ru/callback',
             'result_url' => 'http://thehealthyfood.ru/thx',
             'sandbox' => 1
         ];
