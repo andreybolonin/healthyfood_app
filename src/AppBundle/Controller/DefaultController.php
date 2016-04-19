@@ -128,8 +128,9 @@ class DefaultController extends Controller
      */
     public function callbackAction(Request $request)
     {
-//        $logger = $this->get('logger');
-//        $logger->info($request);
+        $logger = $this->get('logger');
+        $logger->info($request->get('data'));
+        $logger->info($request->get('signature'));
 
 //        $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
 //        $json_string = [
@@ -148,20 +149,16 @@ class DefaultController extends Controller
 //        $data = base64_encode(json_encode($json_string));
 //        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
 
-//        $data_array = json_decode(base64_decode($data), 1);
-
-//        var_dump($data_array['amount']);exit;
+        $data_array = json_decode(base64_decode($request->get('data')), 1);
 
         $em = $this->getDoctrine()->getManager();
-        $lead = $this->getDoctrine()->getRepository('AppBundle:Lead')->findOneByData($request->get('data'));
+        $lead = $this->getDoctrine()->getRepository('AppBundle:Lead')->find($data_array['order_id']);
 
         // Verify callback
         if ($lead) {
 
-            $lead->setStatus($request->get('status'));
-//            $lead->setType($request->get('type'));
-
-            if ($request->get('status') == 'success') {
+            $lead->setStatus($data_array['status']);
+            if ($data_array['status'] == 'success') {
                 $lead->setPayed(true);
             }
 
@@ -169,7 +166,7 @@ class DefaultController extends Controller
             $em->flush();
         }
 
-        return [];
+        return new JsonResponse(true);
     }
 
     /**
