@@ -74,6 +74,69 @@ class Lead extends Base
     protected $data;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $payed;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $type;
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayed()
+    {
+        return $this->payed;
+    }
+
+    /**
+     * @param mixed $payed
+     */
+    public function setPayed($payed)
+    {
+        $this->payed = $payed;
+    }
+
+    /**
      * @return mixed
      */
     public function getData()

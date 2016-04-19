@@ -74,6 +74,7 @@ class DefaultController extends Controller
         $lead->setAmount($lead->calculateAmount());
         $lead->setCurrency('UAH');
         $lead->setDeliveryDate($request->get('delivery'));
+        $lead->setPayed(false);
 
         $em->persist($lead);
         $em->flush();
@@ -126,15 +127,41 @@ class DefaultController extends Controller
      */
     public function callbackAction(Request $request)
     {
-        $data = $request->get('data');
-        $signature = $request->get('signature');
+        $em = $this->getDoctrine()->getManager();
+        $lead = $this->getDoctrine()->getRepository('AppBundle:Lead')->find($request->get('order_id'));
 
-        $status = $request->get('status');
-        $type = $request->get('type');
+        $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
+        $json_string = [
+            'version' => 3,
+            'public_key' => 'i21026092163',
+            'action' => 'pay',
+            'amount' => $lead->getAmount(),
+            'currency' => 'UAH',
+            'description' => 'Оплата услуг HealthyFood',
+            'order_id' => $lead->getId(),
+            'server_url' => '',
+            'result_url' => 'http://thehealthyfood.ru/thx',
+            'sandbox' => 1
+        ];
 
-        return $this->render('default/tariff.html.twig', [
-//            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+        $data = base64_encode(json_encode($json_string));
+        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
+
+        // Verify callback
+        if ($data == $request->get('data') && $signature == $request->get('signature')) {
+
+            $lead->setStatus($request->get('status'));
+            $lead->setType($request->get('type'));
+
+            if ($request->get('status') == 'success') {
+                $lead->setPayed(true);
+            }
+
+            $em->persist($lead);
+            $em->flush();
+        }
+
+        return [];
     }
 
     /**
