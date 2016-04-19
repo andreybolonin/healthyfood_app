@@ -75,6 +75,7 @@ class DefaultController extends Controller
         $lead->setCurrency('UAH');
         $lead->setDeliveryDate($request->get('delivery'));
         $lead->setPayed(false);
+        $lead->setType('pay');
 
         $em->persist($lead);
         $em->flush();
@@ -127,34 +128,38 @@ class DefaultController extends Controller
      */
     public function callbackAction(Request $request)
     {
-        $logger = $this->get('logger');
-        $logger->info($request);
+//        $logger = $this->get('logger');
+//        $logger->info($request);
+
+//        $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
+//        $json_string = [
+//            'version' => 3,
+//            'public_key' => 'i21026092163',
+//            'action' => 'pay',
+//            'amount' => 1800,
+//            'currency' => 'UAH',
+//            'description' => 'Оплата услуг HealthyFood',
+//            'order_id' => 2,
+//            'server_url' => '',
+//            'result_url' => 'http://thehealthyfood.ru/thx',
+//            'sandbox' => 1
+//        ];
+
+//        $data = base64_encode(json_encode($json_string));
+//        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
+
+//        $data_array = json_decode(base64_decode($data), 1);
+
+//        var_dump($data_array['amount']);exit;
 
         $em = $this->getDoctrine()->getManager();
-        $lead = $this->getDoctrine()->getRepository('AppBundle:Lead')->find($request->get('order_id'));
-
-        $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
-        $json_string = [
-            'version' => 3,
-            'public_key' => 'i21026092163',
-            'action' => 'pay',
-            'amount' => $lead->getAmount(),
-            'currency' => 'UAH',
-            'description' => 'Оплата услуг HealthyFood',
-            'order_id' => $lead->getId(),
-            'server_url' => '',
-            'result_url' => 'http://thehealthyfood.ru/thx',
-            'sandbox' => 1
-        ];
-
-        $data = base64_encode(json_encode($json_string));
-        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
+        $lead = $this->getDoctrine()->getRepository('AppBundle:Lead')->findOneByData($request->get('data'));
 
         // Verify callback
-        if ($data == $request->get('data') && $signature == $request->get('signature')) {
+        if ($lead) {
 
             $lead->setStatus($request->get('status'));
-            $lead->setType($request->get('type'));
+//            $lead->setType($request->get('type'));
 
             if ($request->get('status') == 'success') {
                 $lead->setPayed(true);
