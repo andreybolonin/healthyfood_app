@@ -90,6 +90,7 @@ class DefaultController extends Controller
             'currency' => 'UAH',
             'description' => 'Оплата услуг HealthyFood',
             'order_id' => $lead->getId(),
+            'language' => 'ru',
             'server_url' => 'http://thehealthyfood.ru/callback',
             'result_url' => 'http://thehealthyfood.ru/thx',
             'sandbox' => 1
@@ -131,23 +132,6 @@ class DefaultController extends Controller
         $logger = $this->get('logger');
         $logger->info($request->get('data'));
         $logger->info($request->get('signature'));
-
-//        $private_key = 'Lfj88TBWC2wCc9T8vCm2ZunA5qBKkR8SZAKcN0h0';
-//        $json_string = [
-//            'version' => 3,
-//            'public_key' => 'i21026092163',
-//            'action' => 'pay',
-//            'amount' => 1800,
-//            'currency' => 'UAH',
-//            'description' => 'Оплата услуг HealthyFood',
-//            'order_id' => 2,
-//            'server_url' => '',
-//            'result_url' => 'http://thehealthyfood.ru/thx',
-//            'sandbox' => 1
-//        ];
-
-//        $data = base64_encode(json_encode($json_string));
-//        $signature = base64_encode(sha1($private_key.$data.$private_key, 1));
 
         $data_array = json_decode(base64_decode($request->get('data')), 1);
 
