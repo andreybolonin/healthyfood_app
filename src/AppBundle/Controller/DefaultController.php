@@ -46,13 +46,9 @@ class DefaultController extends Controller
             date_format(new \DateTime('+7 days'), 'Y-m-d') => $fmt->format(new \DateTime('+7 days')),
         ];
 
-
-
         return $this->render('default/delivery.html.twig', [
             'tariff' => $tariff,
             'delivery' => $delivery,
-            'data' => $data,
-            'signature' => $signature
         ]);
     }
 
@@ -101,9 +97,9 @@ class DefaultController extends Controller
 //            'signature' => $signature
 //        ]);
 
-        $this->sendHttpRequest();
+//        $this->sendHttpRequest();
 
-       $this->redirect_post('https://www.liqpay.com/api/3/checkout', ['data' => $data, 'signature' => $signature]);
+//       $this->redirect_post('https://www.liqpay.com/api/3/checkout', ['data' => $data, 'signature' => $signature]);
 
 //        return $this->redirect();
 
@@ -114,9 +110,10 @@ class DefaultController extends Controller
 
         // redirect post to https://www.liqpay.com/api/3/checkout
         
-//        return $this->render('default/payment.html.twig', [
-//            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-//        ]);
+        return $this->render('default/payment.html.twig', [
+            'data' => $data,
+            'signature' => $signature
+        ]);
     }
 
 
@@ -175,7 +172,8 @@ class DefaultController extends Controller
         return $response;
     }
 
-    private function sendHttpRequest($host, $path, $query, $port=80){
+    private function sendHttpRequest($host, $path, $query, $port = 80)
+    {
         header("POST $path HTTP/1.1\r\n" );
         header("Host: $host\r\n" );
         header("Content-type: application/x-www-form-urlencoded\r\n" );

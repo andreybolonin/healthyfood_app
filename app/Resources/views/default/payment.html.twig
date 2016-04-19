@@ -883,67 +883,9 @@
                     <!--<p>Почти готово! Скажите нам пожалуйста какую карту Вы хотите использовать чтобы начать получать еженедельную доставку.</p>-->
                     <form accept-charset="UTF-8" action="https://www.liqpay.com/api/3/checkout" class="simple_form new_completion" id="home-landing-page-payment-profile-form" method="post" novalidate="novalidate">
 
-                        <input type="hidden" name="data" value="eyAidmVyc2lvbiIgOiAzLCAicHVibGljX2tleSIgOiAieW91cl9wdWJsaWNfa2V5IiwgImFjdGlvbiIgOiAicGF5IiwgImFtb3VudCIgOiAxLCAiY3VycmVuY3kiIDogIlVTRCIsICJkZXNjcmlwdGlvbiIgOiAiZGVzY3JpcHRpb24gdGV4dCIsICJvcmRlcl9pZCIgOiAib3JkZXJfaWRfMSIgfQ=="/>
-                        <input type="hidden" name="signature" value="QvJD5u9Fg55PCx/Hdz6lzWtYwcI="/>
+                        <input type="hidden" name="data" value="{{ data }}"/>
+                        <input type="hidden" name="signature" value="{{ signature }}">
 
-                        <div style="display: none;" class="row credit-card-input-row">
-                            <div class="input select optional completion_credit_card_exp_month col-xs-4"
-                                 id="billing_credit_card_exp_month"><label class="select optional control-label"
-                                                                           for="completion_credit_card_exp_month">Срок действия</label><select
-                                    class="select optional" id="completion_credit_card_exp_month"
-                                    name="completion[credit_card_exp_month]">
-                                <option value="">Month</option>
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select></div>
-                            <div class="input select optional completion_credit_card_exp_year col-xs-4"
-                                 id="billing_credit_card_exp_year"><label class="select optional control-label"
-                                                                          for="completion_credit_card_exp_year">Credit
-                                card exp year</label><select class="select optional"
-                                                             id="completion_credit_card_exp_year"
-                                                             name="completion[credit_card_exp_year]">
-                                <option value="">Year</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                                <option value="2022">2022</option>
-                                <option value="2023">2023</option>
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                                <option value="2028">2028</option>
-                            </select></div>
-                            <div class="input string optional completion_credit_card_cvv col-xs-4"
-                                 id="billing_credit_card_cvv"><label class="string optional control-label"
-                                                                     for="completion_credit_card_cvv">CVV</label><input
-                                    class="string optional" id="completion_credit_card_cvv"
-                                    name="completion[credit_card_cvv]" size="30" type="text"></div>
-                        </div>
-                        <div style="display: none;" class="row">
-                            <div class="input hidden completion_terms"><input class="hidden" id="completion_terms"
-                                                                              name="completion[terms]" type="hidden"
-                                                                              value="1"></div>
-                            <div class="input password optional completion_password col-xs-12" id="billing_password">
-                                <label class="password optional control-label" for="completion_password">Создайте пароль для вашего аккаунта</label>
-                                <input class="password optional" id="completion_password"
-                                                                   name="completion[password]"
-                                                                   placeholder="Minimum 6 characters" size="30"
-                                                                   type="password"></div>
-                        </div>
                         <!--<p><a class="promo-modal-trigger" href="">Have a gift code?</a></p>-->
                         <div style="display: none;" class="row order-summary visible-xs">
                             <section class="signup-flow order-summary col-xs-12 col-sm-4">
